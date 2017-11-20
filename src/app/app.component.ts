@@ -3,8 +3,8 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Menu } from '../pages/menu/menu';
-import { Signup } from '../pages/signup/signup';
+// import { MenuPage } from '../pages/menu/menu';
+// import { SignupPage } from '../pages/signup/signup';
 import { OneSignal } from "@ionic-native/onesignal";
 
 @Component({
@@ -13,10 +13,15 @@ import { OneSignal } from "@ionic-native/onesignal";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = 'Menu';
+  rootPage: any = 'MenuPage';
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public oneSignal: OneSignal) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public oneSignal: OneSignal
+  ) {
     this.initializeApp();
 
 

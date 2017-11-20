@@ -1,100 +1,97 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Slides, ToastController } from 'ionic-angular';
-// import { ProductDetails } from '../product-details/product-details';
 
 import * as WC from 'woocommerce-api';
 import { WooCommerceProvider } from '../../providers/woocommerce/woocommerce';
-// import { SearchPage } from "../search/search";
 
 @IonicPage({})
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+	selector: 'page-home',
+	templateUrl: 'home.html'
 })
 export class HomePage {
 
-  WooCommerce: any;
-  products: any[];
-  moreProducts: any[];
-  page: number;
-  searchQuery: string = "";
+	WooCommerce: any;
+	products: any[];
+	moreProducts: any[];
+	page: number;
+	searchQuery: string = "";
 
-  @ViewChild('productSlides') productSlides: Slides;
+	@ViewChild('productSlides') productSlides: Slides;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private woocommerce: WooCommerceProvider) {
+	constructor(
+		public navCtrl: NavController,
+		public toastCtrl: ToastController,
+		private woocommerce: WooCommerceProvider
+	) {
 
-    this.page = 2;
+		this.page = 2;
 
-    this.WooCommerce = WC({
-      url: "http://samarth.cloudapp.net",
-      consumerKey: "ck_d6c5feec9ea1c407d2f91661c5137c6e3e48ae3b",
-      consumerSecret: "cs_de8e6cf03a5afd10491dfb1756415ac5a0169ae8"
-    });
+		this.WooCommerce = WC({
+			url: "http://woo.modernconceptbuilders.com",
+			consumerKey: "ck_2e1a60e4cdc45f0fea84b4a771ea96081745adcc",
+			consumerSecret: "cs_2846df38b4e763efeac3700d643fcf78c5762eb6"
+		});
 
-    this.loadMoreProducts(null);
+		this.loadMoreProducts(null);
 
-    this.WooCommerce.getAsync("products").then( (data) => {
-      console.log(JSON.parse(data.body));
-      this.products = JSON.parse(data.body).products;
-    }, (err) => {
-      console.log(err)
-    })
+		this.WooCommerce.getAsync("products").then((data) => {
+			console.log(JSON.parse(data.body));
+			this.products = JSON.parse(data.body).products;
+		}, (err) => {
+			console.log(err)
+		});
 
-  }
+	}
 
-  ionViewDidLoad(){
-    setInterval(()=> {
+	ionViewDidLoad() {
+		setInterval(() => {
 
-      if(this.productSlides.getActiveIndex() == this.productSlides.length() -1)
-        this.productSlides.slideTo(0);
+			if (this.productSlides.getActiveIndex() == this.productSlides.length() - 1)
+				this.productSlides.slideTo(0);
 
-      this.productSlides.slideNext();
-    }, 3000)
-  }
+			this.productSlides.slideNext();
+		}, 3000)
+	}
 
-  loadMoreProducts(event){
-    console.log(event);
-    if(event == null)
-    {
-      this.page = 2;
-      this.moreProducts = [];
-    }
-    else
-      this.page++;
+	loadMoreProducts(event) {
+		console.log(event);
+		if (event == null) {
+			this.page = 2;
+			this.moreProducts = [];
+		}
+		else
+			this.page++;
 
-    this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
-      console.log(JSON.parse(data.body));
-      this.moreProducts = this.moreProducts.concat(JSON.parse(data.body).products);
+		this.WooCommerce.getAsync("products?page=" + this.page).then((data) => {
+			console.log(JSON.parse(data.body));
+			this.moreProducts = this.moreProducts.concat(JSON.parse(data.body).products);
 
-      if(event != null)
-      {
-        event.complete();
-      }
+			if (event != null) {
+				event.complete();
+			}
 
-      if(JSON.parse(data.body).products.length < 10){
-        event.enable(false);
+			if (JSON.parse(data.body).products.length < 10) {
+				event.enable(false);
 
-        this.toastCtrl.create({
-          message: "No more products!",
-          duration: 5000
-        }).present();
+				this.toastCtrl.create({
+					message: "No more products!",
+					duration: 5000
+				}).present();
 
-      }
+			}
+		}, (err) => {
+			console.log(err)
+		})
+	}
 
+	openProductPage(product) {
+		this.navCtrl.push('ProductDetailsPage', { "product": product });
+	}
 
-    }, (err) => {
-      console.log(err)
-    })
-  }
-
-  openProductPage(product){
-    this.navCtrl.push('ProductDetails', {"product": product} );
-  }
-
-  onSearch(event){
-    if(this.searchQuery.length > 0){
-      this.navCtrl.push('SearchPage', {"searchQuery": this.searchQuery});
-    }
-  }
-
+	onSearch(event) {
+		if (this.searchQuery.length > 0) {
+			this.navCtrl.push('SearchPage', { "searchQuery": this.searchQuery });
+		}
+	}
 }

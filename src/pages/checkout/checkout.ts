@@ -11,7 +11,7 @@ import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
 })
-export class Checkout {
+export class CheckoutPage {
 
   WooCommerce: any;
   newOrder: any;
@@ -33,9 +33,9 @@ export class Checkout {
       { method_id: "paypal", method_title: "PayPal" }];
 
     this.WooCommerce = WC({
-      url: "http://samarth.cloudapp.net",
-      consumerKey: "ck_b615342c28e3aa9b0b9d384852cda85a82155197",
-      consumerSecret: "cs_d75f28e39ae9f06318608cec44fc77dd75ce6427"
+      url: "http://woo.modernconceptbuilders.com",
+			consumerKey: "ck_2e1a60e4cdc45f0fea84b4a771ea96081745adcc",
+			consumerSecret: "cs_2846df38b4e763efeac3700d643fcf78c5762eb6"
     });
 
     this.storage.get("userLoginInfo").then((userLoginInfo) => {

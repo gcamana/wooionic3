@@ -8,9 +8,9 @@ export class WooCommerceProvider {
 
   constructor() {
     this.WooCommerce = WC({
-      url: "http://samarth.cloudapp.net",
-      consumerKey: "ck_d6c5feec9ea1c407d2f91661c5137c6e3e48ae3b",
-      consumerSecret: "cs_de8e6cf03a5afd10491dfb1756415ac5a0169ae8"
+      url: "http://woo.modernconceptbuilders.com",
+			consumerKey: "ck_2e1a60e4cdc45f0fea84b4a771ea96081745adcc",
+			consumerSecret: "cs_2846df38b4e763efeac3700d643fcf78c5762eb6"
     });
   }
 
